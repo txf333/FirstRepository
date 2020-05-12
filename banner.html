@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        img {
+            border: none;
+        }
+
+        body {
+            background: white;
+        }
+
+        .play {
+            width: 470px;
+            height: 150px;
+            position: relative;
+            margin: 150px auto 0;
+            overflow: hidden;
+        }
+
+        ol {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            z-index: 2;
+        }
+
+        ol li {
+            
+            margin-right: 3px;
+            display: inline;
+            cursor: pointer;
+            background: white;
+            border: 1px solid sienna;
+        }
+
+        .active {
+            padding: 3px 8px;
+            font-weight: bold;
+            color: snow;
+            background: orange;
+            position: relative;
+            bottom: 2px;
+        }
+
+        ul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        ul li {
+            width: 470px;
+            height: 150px;
+            float: left;
+        }
+
+        ul img {
+            float: left;
+            width: 470px;
+            height: 150px;
+            
+        }
+    </style>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var obtns = $("#play ol li");
+            var oUl = $("#play ul");
+            var oLis = oUl.find("li");
+
+            var iNow = 0;
+            var timer = null;
+
+            obtns.click(function () {
+                iNow = $(this).index();
+                tab();
+            })
+            timer = setInterval(function () {
+                iNow++;
+                tab();
+            }, 2000);
+            $("#play").mouseenter(function () {
+                clearInterval(timer);
+            }).mouseleave(function () {
+                timer = setInterval(function () {
+                    iNow++;
+                    tab();
+                }, 2000);
+            })
+            function tab() {
+                obtns.attr("class", " ").eq(iNow).attr("class", "active");
+                if (iNow == obtns.size()) {
+                    obtns.eq(0).attr("class", "active");
+                }
+                oUl.animate({
+                    top: (-150) * iNow
+                }, 500, function () {
+                    if (iNow == obtns.size()){
+                        iNow = 0; oUl.css("top", "0");}
+                })
+                document.title=iNow;
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <div class="play" id="play">
+        <ol>
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+
+        <ul>
+            <li><a><img src="./img/1.jpg" /></a></li>
+            <li><a><img src="./img/2.jpg" /></a></li>
+            <li><a><img src="./img/3.jpg" /></a></li>
+            <li><a><img src="./img/4.jpg" /></a></li>
+            <li><a><img src="./img/1.jpg" /></a></li>
+            
+        </ul>
+    </div>
+</body>
+
+</html>

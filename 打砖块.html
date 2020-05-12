@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #div1 {
+        width: 600px;
+        height: 600px;
+        border: 1px solid black;
+        position: relative;
+        margin: 100px auto;
+    }
+
+    #ball {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+        bottom: 30px;
+        left: 300px;
+    }
+
+    #bat {
+        width: 100px;
+        height: 30px;
+        background-color: burlywood;
+        position: absolute;
+        left: 250px;
+        bottom: 0px;
+    }
+
+    #brick div {
+        width: 98px;
+        height: 18px;
+        border: 1px solid black;
+        position: relative;
+        float: left;
+    }
+</style>
+<script>
+    window.onload = function () {
+        var oDiv = document.getElementById("div1");
+        var oBall = document.getElementById("ball");
+        var oBat = document.getElementById("bat");
+        var oBrick = document.getElementById("brick");
+        var oBricks = oBrick.getElementsByTagName("div");
+        dragX(oBat);
+        createBrick(60);
+        var speedX = parseInt(Math.random() * 4) + 3;
+        var speedY = -(parseInt(Math.random() * 3) + 5);
+        //小球运动定时器
+        setInterval(function () {
+            oBall.style.left = oBall.offsetLeft + speedX + 'px';
+            oBall.style.top = oBall.offsetTop + speedY + 'px';
+            if (oBall.offsetLeft >= 580 || oBall.offsetLeft <= 0) { speedX *= -1; }
+            if (oBall.offsetTop <= 0) { speedY *= -1; }
+            if (oBall.offsetTop >= 580) {
+                window.location.reload();
+                alert("gameover");
+               
+                
+            }
+            //滑块与小球碰撞
+            if (knock(oBall, oBat)) {
+                speedY *= -1;
+            }
+            //砖块与小球碰撞
+            for (var i = 0; i < oBricks.length; i++) {
+                if (knock(oBricks[i], oBall)) {
+                    speedY *= -1;
+                    oBrick.removeChild(oBricks[i]);
+                    break;
+                }
+            }
+
+        }, 30);
+        //拖拽滑块
+        function dragX(node) {
+            document.onmousedown = function (ev) {
+                var e = ev || window.event;
+                var offsetX = e.clientX - node.offsetLeft;
+
+                document.onmousemove = function (ev) {
+                    var e = ev || window.event;
+                    var l = e.clientX - offsetX;
+
+                    if (l <= 0) { l = 0; }
+                    if (l >= 500) { l = 500; }
+                    node.style.left = l + 'px';
+                }
+            }
+            document.onmouseup = function (ev) {
+                document.onmousemove = null;
+            }
+        }
+
+    }
+    //创建砖块
+    function createBrick(n) {
+        var oBrick = document.getElementById("brick");
+        for (var i = 0; i < n; i++) {
+            var node = document.createElement("div");
+            node.style.backgroundColor = randomColor();
+            oBrick.appendChild(node);
+        }
+        var aBricks = oBrick.getElementsByTagName("div");
+        for (var i = 0; i < aBricks.length; i++) {
+            aBricks[i].style.left = aBricks[i].offsetLeft + 'px';
+            aBricks[i].style.top = aBricks[i].offsetTop + 'px';
+        }
+        for (var i = 0; i < aBricks.length; i++) {
+            aBricks[i].style.position = "absolute";
+        }
+    }
+    function randomColor() {
+        var str = "rgba(" + parseInt(Math.random() * 256) + "," + parseInt(Math.random() * 256) + "," + parseInt(Math.random() * 256) + ")";
+        return str;
+    }
+    function knock(node1, node2) {
+        var l1 = node1.offsetLeft;
+        var r1 = node1.offsetLeft + node1.offsetWidth;
+        var t1 = node1.offsetTop;
+        var b1 = node1.offsetTop + node1.offsetHeight;
+        var l2 = node2.offsetLeft;
+        var r2 = node2.offsetLeft + node2.offsetWidth;
+        var t2 = node2.offsetTop;
+        var b2 = node2.offsetTop + node2.offsetHeight;
+        if (l2 > r1 || t2 > b1 || r2 < l1 || b2 < t1) { return false; }
+        else { return true; }
+
+    }
+</script>
+
+<body>
+
+</body>
+<div id="div1">
+    <div id="ball"></div>
+    <div id="bat"></div>
+    <div id="brick"></div>
+</div>
+
+</html>

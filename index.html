@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			a {
+				color: #91b868;
+				cursor: pointer;
+			}
+			
+			a:hover {
+				color: white;
+				text-decoration: none;
+			}
+			
+			.side {
+				margin-left: 100px;
+				margin-top: 50px;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			img {
+				float: left;
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			
+			#pic {
+				width: 380px;
+				height: 300px;
+				margin-left: 50px;
+				margin-top: 20px;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			div {
+				float: left;
+				cursor: pointer;
+			}
+			
+			.wenzi {
+				width: 380px;
+				height: 100px;
+				position: absolute;
+				background-color: #91b868;
+				margin-top: 100px;
+				text-align: center;
+				opacity: 0.9;
+				line-height: 100px;
+				font-size: 40px;
+				color: white;
+			}
+			
+			.wenzi2 {
+				transition-delay: 0.6s;
+				width: 380px;
+				height: 200px;
+				position: absolute;
+				background-color: #888888;
+				overflow: hidden;
+				margin-top: -220px;
+				text-align: center;
+				opacity: 0.7;
+				font-size: 20px;
+				color: white;
+			}
+			
+			@keyframes move1 {
+				from {
+					transform: translateY(0);
+				}
+				to {
+					transform: translateY(-100px);
+				}
+			}
+			
+			@keyframes move1-1 {
+				from {
+					transform: translateY(-120px);
+				}
+				to {
+					transform: translateY(0);
+				}
+			}
+			
+			@keyframes move2 {
+				from {
+					transform: translateY(0);
+				}
+				to {
+					transform: translateY(320px);
+				}
+			}
+			
+			@keyframes move2-1 {
+				from {
+					transform: translateY(320px);
+				}
+				to {
+					transform: translateY(0);
+				}
+			}
+		</style>
+
+		<script>
+			$(function() {
+				//1
+				var Obox = $(".side").find("div");
+				alert(Obox.length);
+				//移入
+				Obox.bind("mouseenter", function() {
+					$("#" + this.id + " .wenzi").css({
+						"animation": "move1 2s",
+						"animation-fill-mode": "forwards"
+					})
+					
+					$("#" + this.id + " .wenzi2").css({
+						"animation": "move2 2s ",
+						"animation-fill-mode": "forwards "
+					})
+				})
+				
+				//移出
+				Obox.bind("mouseleave", function() {
+					$("#" + this.id + " .wenzi").css("animation", "move1-1 2s")
+					$("#" + this.id + " .wenzi2").css("animation", "move2-1 2s")
+				})
+				
+			})
+		</script>
+
+	</head>
+
+	<body>
+		<div class="side">
+			<div id="pic"><img src="img/1.jpg">
+				<p class="wenzi ">Specialized in </p>
+				<p class="wenzi2 ">这是文字二</p>
+			</div>
+			<div id="pic"><img src="img/2.jpg">
+				<p class="wenzi">Expertise in type</p>
+				<p class="wenzi2 ">这是文字二</p>
+			</div>
+			<div id="pic"><img src="img/3.jpg">
+				<p class="wenzi">Superior to heart</p>
+				<p class="wenzi2 ">这是文字二</p>
+			</div>
+			<div id="pic"><img src="img/4.jpg">
+				<p class="wenzi">Professional spirit</p>
+				<p class="wenzi2 ">这是文字二</p>
+			</div>
+			<div id="pic"><img src="img/5.jpg">
+				<p class="wenzi">Professional quality</p>
+				<p class="wenzi2 ">这是文字二</p>
+			</div>
+			<div id="pic"><img src="img/6.jpg">
+				<p class="wenzi">Popular trust</p>
+				<p class="wenzi2 ">This area can be fully edited and gives you the opportunity to introduce yourself, your website, your products or your services. <br>
+				<a href="https://www.baidu.com/">Read More</a></p>
+			</div>
+
+			</div>
+
+	</body>
+
+</html>
